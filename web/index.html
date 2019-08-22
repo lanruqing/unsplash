@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .gallery{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
+        margin: 0 auto;
+        flex-wrap: wrap;
+    }
+    .gallery img{
+        width: 25%;
+        height: auto;
+        opacity: 0;
+        animation: 1s linear fadeIn forwards;
+    }
+    @keyframes  fadeIn{
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity: 1;
+        }
+    }
+</style>
+<body>    
+    <div class="gallery"></div>
+    <button id="getNext" onclick="getNext()">GET next</button>
+</body>
+<script>
+    let page = 1
+    $(function(){
+        get(page)
+    })
+    // $('#get').click(function(){
+    //     get(1)
+    // })
+    function getNext(){
+        page++
+        console.log(page)
+        get(page)
+    }
+    function get(page){
+        $.get(`/getPics/${page}`,data=>{
+            const html = '';
+            data['data'].forEach(pic => {
+                let a = `<img src=${pic} />`
+                $('.gallery').append(a)
+            });
+        })
+    }
+</script>
+</html>
